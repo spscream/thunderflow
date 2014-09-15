@@ -30,6 +30,7 @@ gem 'spring',        group: :development
 group :test, :development do
   gem 'rspec-rails'
   gem 'factory_girl_rails'
+  gem 'shoulda-matchers', require: false
 end
 
 # Use ActiveModel has_secure_password
