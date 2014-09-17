@@ -5,4 +5,9 @@ FactoryGirl.define do
     title "How to write a tests?"
     text "I'm writing tests for thunderflow, how to do it right?"
   end
+
+  factory :invalid_question, class: "Question" do
+    title nil
+    text nil
+  end
 end

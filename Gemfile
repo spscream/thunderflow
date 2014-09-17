@@ -26,11 +26,17 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
 gem 'spring',        group: :development
 
+gem 'slim-rails'
+
+gem 'foundation-rails'
 
 group :test, :development do
   gem 'rspec-rails'
   gem 'factory_girl_rails'
-  gem 'shoulda-matchers', require: false
+end
+
+group :test do
+  gem 'shoulda-matchers'
 end
 
 # Use ActiveModel has_secure_password
