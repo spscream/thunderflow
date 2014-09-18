@@ -1,0 +1,9 @@
+p= link_to 'Ask question', new_question_path
+
+- if @questions.any?
+  table#questions
+    - for question in @questions
+      tr
+        td.title = question.title
+- else
+  p No questions.
