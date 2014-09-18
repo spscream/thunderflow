@@ -35,6 +35,8 @@ gem 'spring',        group: :development
 
 gem 'slim-rails'
 
+gem 'rails_layout', group: :development
+
 
 group :test, :development do
   gem 'rspec-rails'

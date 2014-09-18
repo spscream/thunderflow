@@ -1,24 +1,18 @@
 doctype html
 html
   head
-    title ThunderFlow
-    meta name="viewport" content="width=device-width, initial-scale=1.0"
-    = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true
-    = javascript_include_tag 'application', 'data-turbolinks-track' => true
-    = csrf_meta_tags
+    meta[name="viewport" content="width=device-width, initial-scale=1.0"]
+    title
+      = content_for?(:title) ? yield(:title) : 'Thunderflow'
+    meta name="description" content="#{content_for?(:description) ? yield(:description) : 'Thunderflow'}"
+    == stylesheet_link_tag "application", :media => 'all', 'data-turbolinks-track' => true
+    / Modernizr is required for Zurb Foundation
+    == javascript_include_tag 'vendor/modernizr'
+    == javascript_include_tag 'application', 'data-turbolinks-track' => true
+    == csrf_meta_tags
   body
-    nav.top-bar [role="navigation" data-topbar]
-      ul.title-area
-        li.name
-          h1= link_to "ThunderFlow", root_path
-      section.top-bar-section
-        ul.right
-          - if user_signed_in?
-            li: a[href="#"]= current_user.email
-            li= link_to "Sign Out", destroy_user_session_path, method: :delete
-          - else
-            li= link_to "Sign In", new_user_session_path
-
-    p.notice= notice
-    p.alert= alert
-    == yield
+    header
+      == render 'layouts/navigation'
+    .row[role="main"]
+      == render 'layouts/messages'
+      == yield

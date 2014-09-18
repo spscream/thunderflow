@@ -13,7 +13,7 @@ feature 'User sign in', %q{
 
     expect(page).to have_content 'Signed in successfully.'
     expect(page).to have_content user.email
-    expect(page).to have_content 'Sign Out'
+    expect(page).to have_content 'Sign out'
     expect(current_path).to eq root_path
   end
 
@@ -29,7 +29,7 @@ feature 'User sign in', %q{
 
   scenario 'Authenticated user tries to sign out' do
     sign_in(user)
-    click_on 'Sign Out'
+    click_on 'Sign out'
 
     expect(page).to have_content 'Signed out successfully.'
     expect(current_path).to eq root_path

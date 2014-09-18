@@ -4,6 +4,6 @@ p= link_to 'Ask question', new_question_path
   table#questions
     - for question in @questions
       tr
-        td.title = question.title
+        td.title = link_to question.title, question
 - else
   p No questions.
