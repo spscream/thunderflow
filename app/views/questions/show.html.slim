@@ -1,3 +1,15 @@
 .title= @question.title
 .text= @question.text
+hr
+h4 Answers:
+- @question.answers.each do |answer|
+  .answer_text= answer.text
+
+h4 Add answer:
+
+=simple_form_for [@question, @answer] do |f|
+  = f.error_notification
+  = f.input :text
+  = f.button :submit, class: "button small"
+
 p= link_to 'Back to Questions list', questions_path
