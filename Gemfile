@@ -37,6 +37,8 @@ gem 'slim-rails'
 
 gem 'rails_layout', group: :development
 
+gem 'rails_12factor', group: :production
+gem 'unicorn-rails', group: :production
 
 group :test, :development do
   gem 'rspec-rails'
