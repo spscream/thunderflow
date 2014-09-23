@@ -6,7 +6,7 @@ RSpec.describe AnswersController, :type => :controller do
     sign_in_user
     context "with valid attributes" do
       it "saves answer to database" do
-        expect{ post :create, question_id: question.id, answer: attributes_for(:answer)}.to change(Answer, :count).by(1)
+        expect{ post :create, question_id: question, answer: attributes_for(:answer)}.to change(Answer, :count).by(1)
       end
       it "redirects to question show view" do
         post :create, question_id: question.id, answer: attributes_for(:answer)
@@ -15,13 +15,12 @@ RSpec.describe AnswersController, :type => :controller do
     end
     context "with invalid attributes" do
       it "does not save question" do
-        expect{ post :create, question_id: question.id, answer: attributes_for(:invalid_answer) }.to_not change(Answer, :count)
+        expect{ post :create, question_id: question, answer: attributes_for(:invalid_answer) }.to_not change(Answer, :count)
       end
       it "re-renders question show view" do
         post :create, question_id: question.id, answer: attributes_for(:invalid_answer)
         should render_template "questions/show"
       end
     end
-
   end
 end

@@ -31,9 +31,13 @@ feature 'Create question', %q{
 
     click_on 'Create Question'
 
-    expect(page).to have_content "Titlecan't be blank"
-    expect(page).to have_content "Textcan't be blank"
+    within(".question_title") do
+      expect(page).to have_content "can't be blank"
+    end
 
+    within(".question_text") do
+      expect(page).to have_content "can't be blank"
+    end
   end
 
   scenario 'Authenticated user creates question with short title and text' do
