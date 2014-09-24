@@ -49,7 +49,9 @@ end
 group :test do
   gem 'shoulda-matchers'
   gem 'capybara'
+  gem 'selenium-webdriver'
   gem 'launchy'
+  gem 'database_cleaner'
 end
 
 # Use ActiveModel has_secure_password

@@ -2,12 +2,12 @@
 .text= @question.text
 hr
 h4 Answers:
-- @question.answers.each do |answer|
-  .answer_text= answer.text
+.answers
+  = render 'questions/answers'
 
 h4 Add answer:
 
-=simple_form_for [@question, @answer] do |f|
+=simple_form_for [@question, @answer], remote: true do |f|
   = f.error_notification
   = f.input :text
   = f.button :submit, class: "button small"
