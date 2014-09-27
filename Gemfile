@@ -53,6 +53,7 @@ group :test do
   gem 'launchy'
   gem 'database_cleaner'
   gem 'capybara-email'
+  gem 'codeclimate-test-reporter', require: nil
 end
 
 # Use ActiveModel has_secure_password
