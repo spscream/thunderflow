@@ -18,7 +18,7 @@ class AnswersController < ApplicationController
     else
       @question = @answer.question
       if @question.answers.accepted.empty?
-        @answer.accepted = true
+        @answer.is_accepted = true
         if @answer.save
           flash[:notice] = "You accepted an answer."
           render 'answers/accept'

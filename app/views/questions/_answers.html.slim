@@ -2,7 +2,7 @@
   - unless answer.new_record?
     .answer
       .answer_text
-        = fa_icon "check" if answer.accepted?
+        = fa_icon "check" if answer.is_accepted?
         = answer.text
         - if current_user == @question.user
           - unless @question.answers.accepted.count > 0
