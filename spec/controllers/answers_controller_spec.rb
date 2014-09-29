@@ -39,12 +39,15 @@ RSpec.describe AnswersController, :type => :controller do
       end
       context "question has accepted question" do
         let!(:question) { create(:question, user: user)}
-        let!(:answer1) { create(:answer, question: question, accepted: true)}
-        let!(:answer2) { create(:answer, question: question, accepted: false)}
+        let!(:answer1) { create(:answer, question: question, user: user, accepted: true)}
+        let!(:answer2) { create(:answer, question: question, user: user, accepted: false)}
         before {
           post :accept, id: answer2.id, format: :js
         }
         it { should respond_with(403)}
+        it "returns error message 'Question already has accepted answer.'" do
+          expect(response.body).to eq 'Question already has accepted answer.'
+        end
       end
     end
 
@@ -55,6 +58,9 @@ RSpec.describe AnswersController, :type => :controller do
         post :accept, id: answer.id, format: :js
       }
       it { should respond_with(403)}
+      it "returns error message 'You are not an owner of question.'" do
+        expect(response.body).to eq 'You are not an owner of question.'
+      end
     end
   end
 end
