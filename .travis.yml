@@ -9,3 +9,7 @@ before_script:
 
 rvm:
 - 2.1.2
+
+env:
+  global:
+    - DATABASE_URL=postgres://postgres@localhost/test
