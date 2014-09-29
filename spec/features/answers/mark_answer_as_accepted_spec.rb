@@ -1,4 +1,4 @@
-require 'rails_helper'
+require 'acceptance_helper'
 
 feature 'Mark answer as accepted', %q{
     In order to be show that answer helped me to find solution
@@ -9,7 +9,7 @@ feature 'Mark answer as accepted', %q{
   given (:user) {create(:user)}
   given (:question) {create(:question_with_answers)}
 
-  scenario 'Author of question marks answer as accepted' do
+  scenario 'Author of question marks answer as accepted', js: true do
     visit question_path(question)
     within('.answers') do
       first('.answer').click_button('Accept')

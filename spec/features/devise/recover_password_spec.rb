@@ -1,4 +1,4 @@
-require 'rails_helper'
+require 'acceptance_helper'
 
 feature 'Recovery of lost password', %q{
   In order to recover acces to site

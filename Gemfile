@@ -18,6 +18,7 @@ gem 'coffee-rails', '~> 4.0.0'
 
 
 gem 'foundation-rails', '5.4.3.1'
+gem 'font-awesome-rails'
 
 gem 'simple_form'
 gem 'devise'
@@ -44,6 +45,7 @@ gem 'unicorn-rails', group: :production
 group :test, :development do
   gem 'rspec-rails'
   gem 'factory_girl_rails'
+  gem 'pry'
 end
 
 group :test do

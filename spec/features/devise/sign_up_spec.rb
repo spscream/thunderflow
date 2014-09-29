@@ -1,7 +1,7 @@
-require 'rails_helper'
+require 'acceptance_helper'
 
 feature 'User sign up', %q{
-    In order to to be able to sign in
+    In order to be able to sign in
     As an user
     I want to sign up with email and password
 } do

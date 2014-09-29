@@ -1,2 +1,9 @@
 - @question.answers.each do |answer|
-  .answer_text= answer.text
+  - unless answer.new_record?
+    .answer
+      .answer_text
+        = fa_icon "check" if answer.accepted?
+        = answer.text
+        - if current_user == @question.user
+          - unless @question.answers.accepted.count > 0
+            = button_to "Accept", accept_answer_path(answer), {method: 'post', remote: true}
