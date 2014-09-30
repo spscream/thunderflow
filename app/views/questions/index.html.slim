@@ -1,9 +1,12 @@
 p= link_to 'Ask question', new_question_path
 
 - if @questions.any?
-  table#questions
+  .questions.columns.large-12
     - for question in @questions
-      tr
-        td.title = link_to question.title, question
+      .question
+        .counters
+        .info
+          .question-title = link_to question.title, question
+          .question-date = question.created_at
 - else
   p No questions.

@@ -3,7 +3,7 @@
 FactoryGirl.define do
   factory :answer do
     question
-    text "This is the awesome answer on your question. Very helpfull!"
+    text 'This is the awesome answer on your question. Very helpfull!'
     is_accepted false
   end
 

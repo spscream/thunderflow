@@ -4,6 +4,7 @@ class AnswersController < ApplicationController
   def create
     @question = Question.find(params[:question_id])
     @answer = @question.answers.new(answer_params)
+    @answers = @question.answers.all.order(is_accepted: :desc, created_at: :asc)
     if @answer.save
       flash[:notice] = "Answer successfully created."
     else
@@ -13,14 +14,15 @@ class AnswersController < ApplicationController
 
   def accept
     @answer = Answer.find(params[:id])
-    if current_user != @answer.user
+    if current_user != @answer.question.user
       render :status => :forbidden, :text => 'You are not an owner of question.'
     else
       @question = @answer.question
       if @question.answers.accepted.empty?
         @answer.is_accepted = true
-        if @answer.save
+        if @answer.save!
           flash[:notice] = "You accepted an answer."
+          @answers = @question.answers.all.order(is_accepted: :desc, created_at: :asc)
           render 'answers/accept'
         end
       else

@@ -13,3 +13,5 @@ h4 Add answer:
   = f.button :submit, class: "button small"
 
 p= link_to 'Back to Questions list', questions_path
+- if current_user == @question.user
+  p= link_to 'Edit Question', edit_question_path(@question)

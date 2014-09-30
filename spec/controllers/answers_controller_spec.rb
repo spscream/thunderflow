@@ -28,7 +28,8 @@ RSpec.describe AnswersController, :type => :controller do
     sign_in_user
     context "user is author of question" do
       context "question has no accepted questions" do
-        let!(:answer) { create(:answer, user: user, is_accepted: false) }
+        let!(:question) { create(:question, user: user)}
+        let!(:answer) { create(:answer, user: user, question: question, is_accepted: false) }
         it "marks an answer as accepted" do
           expect{post :accept, id: answer.id, format: :js}.to change(Answer.accepted, :count).by(1)
         end

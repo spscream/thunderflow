@@ -7,9 +7,10 @@ feature 'Mark answer as accepted', %q{
 } do
 
   given (:user) {create(:user)}
-  given (:question) {create(:question_with_answers)}
+  given (:question) {create(:question_with_answers, user: user)}
 
   scenario 'Author of question marks answer as accepted', js: true do
+    sign_in(user)
     visit question_path(question)
     within('.answers') do
       first('.answer').click_button('Accept')

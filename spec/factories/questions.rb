@@ -4,8 +4,7 @@ FactoryGirl.define do
   factory :question do
     title "How to write a tests?"
     text "I'm writing tests for thunderflow, how to do it right?"
-    accepted_answer nil
-
+    user
     factory :question_with_answers do
       ignore do
         answers_count 5
@@ -18,6 +17,7 @@ FactoryGirl.define do
   end
 
   factory :invalid_question, class: "Question" do
+    user
     title nil
     text nil
   end

@@ -40,13 +40,25 @@ RSpec.describe QuestionsController, :type => :controller do
 
   describe 'GET #edit' do
     sign_in_user
-    before { get :edit, id: question }
+    let(:question) { create(:question, user: user)}
+    context 'User is owner of question' do
+      before { get :edit, id: question }
+      it 'assigns the requested question to @question' do
+        expect(assigns(:question)).to eq question
+      end
 
-    it 'assigns the requested question to @question' do
-      expect(assigns(:question)).to eq question
+      it { should render_template :edit }
     end
 
-    it { should render_template :edit }
+    context 'User is not an owner of question' do
+      let(:question) {create(:question)}
+      before { get :edit, id: question}
+      it { should redirect_to question_path(question) }
+      it 'sets flash error message' do
+        expect(flash[:error]).to have_content 'You cannot edit question. You are not an owner.'
+      end
+    end
+
   end
 
   describe 'POST #create' do
@@ -99,7 +111,7 @@ RSpec.describe QuestionsController, :type => :controller do
       it 'does not change question attributes' do
         question.reload
         expect(question.title).to eq 'How to write a tests?'
-        expect(question.text).to eq "I'm writing tests for thunderflow, how to do it right?"
+        expect(question.text).to eq 'I\'m writing tests for thunderflow, how to do it right?'
       end
 
       it 're-renders edit view' do

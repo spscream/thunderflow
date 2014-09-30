@@ -8,6 +8,7 @@ class QuestionsController < ApplicationController
 
   def show
     @answer = @question.answers.new
+    @answers = @question.answers.all.order(is_accepted: :desc)
   end
 
   def new
@@ -15,11 +16,16 @@ class QuestionsController < ApplicationController
   end
 
   def edit
-
+    if current_user != @question.user
+      flash[:error] = 'You cannot edit question. You are not an owner.'
+      redirect_to question_path(@question)
+    else
+      render :edit
+    end
   end
 
   def create
-    @question = Question.new(question_params)
+    @question = current_user.questions.new(question_params)
     if @question.save
       flash[:notice] = 'Your question successfully created.'
       redirect_to @question
@@ -30,6 +36,7 @@ class QuestionsController < ApplicationController
 
   def update
     if @question.update(question_params)
+      flash[:notice] = 'Question was successfully updated.'
       redirect_to @question
     else
       render :edit
