@@ -21,4 +21,17 @@ feature 'Mark answer as accepted', %q{
       expect(page).to_not have_button('Accept')
     end
   end
+
+  scenario 'Unauthenticated user tries to mark answer as accepted' do
+    visit question_path(question)
+
+    expect(page).to_not have_link 'Accept'
+  end
+
+  scenario 'Other user tries to mark answer as accepted' do
+    sign_in(create(:user))
+    visit question_path(question)
+
+    expect(page).to_not have_link 'Accept'
+  end
 end

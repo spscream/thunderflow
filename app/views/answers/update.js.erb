@@ -1,0 +1,7 @@
+<% if @answer.errors.present? %>
+    $('.answer-form-<%= @answer.id %>').replaceWith('<%= j render 'questions/answer_form', answer: @answer %>')
+<% else %>
+    $('.answer-<%= @answer.id %>')
+            .replaceWith('<%= j render 'questions/answer', answer: @answer %>')
+    $('.answers').trigger('answer:updated', ['<%= @answer.id %>']);
+<% end %>

@@ -1,0 +1,5 @@
+div class="columns small-12 answer-form-#{answer.id} #{'hide' unless answer.errors.present?}"
+  = simple_form_for answer, remote: true do |f|
+    = f.error_notification
+    = f.input :text
+    = f.button :submit, class: "button small"

@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   devise_for :users
   root 'questions#index'
   resources :questions do
-    resources :answers, only: :create, shallow: true do
+    resources :answers, only: [:create, :update], shallow: true do
       post 'accept', on: :member
     end
   end

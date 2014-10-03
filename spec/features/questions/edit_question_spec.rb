@@ -23,7 +23,15 @@ feature 'Edit', %q{
     expect(page).to have_content('New title is awesome')
     expect(page).to have_content('New text is awesome too. What am I doing now?')
   end
+
   scenario 'User cannot edit others question' do
+    sign_in(create(:user))
+    visit question_path(create(:question))
+
+    expect(page).not_to have_link 'Edit'
+  end
+
+  scenario 'Guest cannot edit questions'  do
     visit question_path(create(:question))
 
     expect(page).not_to have_link 'Edit'

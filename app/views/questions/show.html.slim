@@ -1,17 +1,28 @@
-.title= @question.title
-.text= @question.text
+.row
+  .small-12.columns
+    h2.question-title= @question.title
+    .question-text= @question.text
+.row
 hr
-h4 Answers:
-.answers
-  = render 'questions/answers'
+.row
+  .small-12.columns.answers
+    = render 'questions/answers'
 
-h4 Add answer:
+- if current_user
+  .row
+    .small-12.columns.answers-form
+      h4 Add answer:
 
-=simple_form_for [@question, @answer], remote: true do |f|
-  = f.error_notification
-  = f.input :text
-  = f.button :submit, class: "button small"
+      =simple_form_for [@question, @answer], remote: true do |f|
+        = f.error_notification
+        = f.input :text
+        = f.button :submit, class: "button small"
+- else
+  .row: .small-12.columns.text-center
+    == "To be able make an answers please #{link_to("sign in", new_user_session_path)}."
 
-p= link_to 'Back to Questions list', questions_path
-- if current_user == @question.user
-  p= link_to 'Edit Question', edit_question_path(@question)
+.row
+  .small-12.columns.actions
+    p= link_to 'Back to Questions list', questions_path
+    - if current_user == @question.user
+      p= link_to 'Edit Question', edit_question_path(@question)

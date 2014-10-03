@@ -9,4 +9,9 @@ class ApplicationController < ActionController::Base
   def discard_flash_if_xhr
     flash.discard if request.xhr?
   end
+
+  def render_error(error_msg, code=500)
+    flash[:error] = error_msg
+    render 'error', status: code
+  end
 end

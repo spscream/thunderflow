@@ -8,7 +8,7 @@ class QuestionsController < ApplicationController
 
   def show
     @answer = @question.answers.new
-    @answers = @question.answers.all.order(is_accepted: :desc)
+    @answers = @question.answers.all.order(is_accepted: :desc, created_at: :asc)
   end
 
   def new

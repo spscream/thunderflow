@@ -1,12 +1,11 @@
-p= link_to 'Ask question', new_question_path
-
+.row
+  .columns.small-12.text-right
+    = link_to 'Ask question', new_question_path, class: "button small"
 - if @questions.any?
-  .questions.columns.large-12
+  .row.questions
     - for question in @questions
-      .question
-        .counters
-        .info
-          .question-title = link_to question.title, question
-          .question-date = question.created_at
+      .columns.small-12.question
+        .question-title = link_to question.title, question
+        h5.author: small= "#{question.user.email}, #{time_ago_in_words(question.created_at)} ago."
 - else
   p No questions.
