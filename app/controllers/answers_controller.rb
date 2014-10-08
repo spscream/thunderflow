@@ -7,7 +7,7 @@ class AnswersController < ApplicationController
     @answer.user = current_user
     @answers = @question.answers.all.order(is_accepted: :desc, created_at: :asc)
     if @answer.save
-      flash[:notice] = "Answer successfully created."
+      flash[:notice] = 'Answer successfully created.'
     else
       render 'questions/show'
     end
@@ -28,7 +28,7 @@ class AnswersController < ApplicationController
       if @question.answers.accepted.empty?
         @answer.is_accepted = true
         if @answer.save!
-          flash[:notice] = "You accepted an answer."
+          flash[:notice] = 'You accepted an answer.'
           @answers = @question.answers.all.order(is_accepted: :desc, created_at: :asc)
           render 'answers/accept'
         end
@@ -36,6 +36,14 @@ class AnswersController < ApplicationController
         render :status => :forbidden, :text => 'Question already has accepted answer.'
       end
     end
+  end
+
+  def destroy
+    @answer = Answer.find(params[:id])
+    @answer_id = @answer.id
+    @answer.destroy!
+    flash[:notice] = 'Answer was successfully deleted'
+    render 'answers/destroy'
   end
 
   private

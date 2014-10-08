@@ -4,10 +4,11 @@ div[class="row answer answer-#{answer.id}"]
     h5.author: small= "#{answer.user.email}, #{time_ago_in_words(answer.created_at)} ago."
   .columns.small-2.text-center
     - if answer.is_accepted?
-      a.button.tiny.rounded.success== "#{fa_icon"check"} Accepted"
+      a.button.tiny.radius.success== "#{fa_icon"check"} Accepted"
     - if current_user == answer.user
-      a href="#" class="answer-edit button tiny" data-answer-id="#{answer.id}" Edit answer
+      a href="#" class="answer-edit button radius tiny" data-answer-id="#{answer.id}" Edit answer
+      = link_to 'Delete answer', answer_path(answer), {remote: true, method: 'delete', class: 'button tiny radius'}
     - if current_user == @question.user
       - unless @question.answers.accepted.count > 0
-        = button_to "Accept", accept_answer_path(answer), {method: 'post', remote: true, class: 'button tiny radius'}
+        = button_to 'Accept', accept_answer_path(answer), {method: 'post', remote: true, class: 'button tiny radius'}
   = render 'questions/answer_form', answer: answer

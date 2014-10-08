@@ -64,6 +64,7 @@ RSpec.describe AnswersController, :type => :controller do
   end
 
   describe 'PATCH #update' do
+    sign_in_user
     let(:answer) { create(:answer, question: question) }
 
     it 'assings the requested answer to @answer' do
@@ -82,9 +83,22 @@ RSpec.describe AnswersController, :type => :controller do
       expect(answer.text).to eq 'new body'
     end
 
-    it 'render update template' do
+    it 'renders update template' do
       patch :update, id: answer, question_id: question, answer: attributes_for(:answer), format: :js
       expect(response).to render_template :update
+    end
+  end
+
+  describe 'DELETE #destroy' do
+    let!(:answer) { create(:answer, question: question)}
+
+
+    it 'deletes the requested answer' do
+      expect{delete :destroy, id: answer, format: :js}.to change(Answer, :count).by(-1)
+    end
+    it 'renders destroy template' do
+      delete :destroy, id: answer, format: :js
+      should render_template :destroy
     end
   end
 end

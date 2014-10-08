@@ -10,7 +10,7 @@ feature 'Edit answer', %q{
   given!(:question) { create(:question, user: user) }
   given!(:answer) { create(:answer, question: question, user: user) }
 
-  scenario "Unauthenticated user tries to edit answer" do
+  scenario 'Unauthenticated user tries to edit answer' do
     visit question_path(question)
 
     expect(page).to_not have_link 'Edit answer'

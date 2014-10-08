@@ -1,2 +1,4 @@
-$('.answers').html('<%= j render 'questions/answers' %>');
 $('.flash').html('<%= j render 'layouts/messages' %>');
+$('.answers').append('<%= j render 'questions/answer', answer: @answer %>');
+$('.answers').trigger('answer:updated',[<%= @answer.id %>]);
+$('#new_answer').trigger("reset");
