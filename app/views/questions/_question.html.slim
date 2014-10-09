@@ -1,0 +1,7 @@
+div[class="row question question-#{question.id}"]
+  .columns.small-10
+    .question-title = link_to question.title, question
+    h5.author: small= "#{question.user.email}, #{time_ago_in_words(question.created_at)} ago."
+  .columns.small-2.text-center
+    - if current_user == question.user
+      = link_to 'Delete question', question_path(question), {remote: true, method: 'delete', class: 'button tiny radius'}

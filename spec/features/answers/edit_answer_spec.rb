@@ -16,7 +16,7 @@ feature 'Edit answer', %q{
     expect(page).to_not have_link 'Edit answer'
   end
 
-  describe 'Authenticated user' do
+  describe 'Authenticated user', js: true do
     before do
       sign_in user
       visit question_path(question)

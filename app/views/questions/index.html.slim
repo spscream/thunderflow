@@ -4,8 +4,6 @@
 - if @questions.any?
   .row.questions
     - for question in @questions
-      .columns.small-12.question
-        .question-title = link_to question.title, question
-        h5.author: small= "#{question.user.email}, #{time_ago_in_words(question.created_at)} ago."
+     = render 'questions/question', question: question
 - else
   p No questions.
