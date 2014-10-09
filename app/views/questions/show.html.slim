@@ -2,7 +2,13 @@
   .small-12.columns
     h2.question-title= @question.title
     .question-text= @question.text
+hr
 .row
+  .small-12.columns
+    h4 Attachments:
+    ul
+      - @question.attachments.each do |a|
+        li= link_to a.file.identifier, a.file.url
 hr
 .row
   .small-12.columns.answers

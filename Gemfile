@@ -23,6 +23,8 @@ gem 'font-awesome-rails'
 gem 'simple_form'
 gem 'devise'
 
+gem 'carrierwave'
+
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
@@ -39,8 +41,10 @@ gem 'slim-rails'
 
 gem 'rails_layout', group: :development
 
-gem 'rails_12factor', group: :production
-gem 'unicorn-rails', group: :production
+group :production do
+  gem 'rails_12factor'
+  gem 'unicorn-rails'
+end
 
 group :test, :development do
   gem 'rspec-rails'
