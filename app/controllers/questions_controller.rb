@@ -8,7 +8,7 @@ class QuestionsController < ApplicationController
 
   def show
     @answer = @question.answers.new
-    @answers = @question.answers.all.order(is_accepted: :desc, created_at: :asc)
+    @answers = @question.answers.all
   end
 
   def new
@@ -46,7 +46,6 @@ class QuestionsController < ApplicationController
 
   def destroy
     @question = Question.find(params[:id])
-    @question_id = @question.id
     @question.destroy!
     flash[:notice] = 'Question was successfully deleted'
   end

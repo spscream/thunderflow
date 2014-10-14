@@ -1,11 +1,12 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!, only: :create
+  before_action :load_answer, only: [:update, :accept]
 
   def create
     @question = Question.find(params[:question_id])
     @answer = @question.answers.new(answer_params)
     @answer.user = current_user
-    @answers = @question.answers.all.order(is_accepted: :desc, created_at: :asc)
+    @answers = @question.answers.all
     if @answer.save
       flash[:notice] = 'Answer successfully created.'
     else
@@ -14,40 +15,32 @@ class AnswersController < ApplicationController
   end
 
   def update
-    @answer = Answer.find(params[:id])
     @answer.update(answer_params)
     @question = @answer.question
   end
 
   def accept
-    @answer = Answer.find(params[:id])
-    if current_user != @answer.question.user
-      render :status => :forbidden, :text => 'You are not an owner of question.'
-    else
+    if @answer.accept
       @question = @answer.question
-      if @question.answers.accepted.empty?
-        @answer.is_accepted = true
-        if @answer.save!
-          flash[:notice] = 'You accepted an answer.'
-          @answers = @question.answers.all.order(is_accepted: :desc, created_at: :asc)
-          render 'answers/accept'
-        end
-      else
-        render :status => :forbidden, :text => 'Question already has accepted answer.'
-      end
+      @answers = @question.answers.all
+      flash[:notice] = 'You accepted an answer.'
+    else
+      render :status => :forbidden, :text => 'Question already has accepted answer.'
     end
   end
 
   def destroy
     @answer = Answer.find(params[:id])
-    @answer_id = @answer.id
     @answer.destroy!
     flash[:notice] = 'Answer was successfully deleted'
-    render 'answers/destroy'
   end
 
   private
   def answer_params
     params.require(:answer).permit(:question_id, :text, :user_id)
+  end
+
+  def load_answer
+    @answer = current_user.answers.find(params[:id])
   end
 end

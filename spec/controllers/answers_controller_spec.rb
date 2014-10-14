@@ -40,7 +40,7 @@ RSpec.describe AnswersController, :type => :controller do
 
       context 'question has accepted answers' do
         before do
-          post :accept, id: answer1, format: :js
+          answer1.accept
           post :accept, id: answer2, format: :js
         end
 
@@ -54,18 +54,17 @@ RSpec.describe AnswersController, :type => :controller do
     context 'user is not an author of question' do
       let(:user1) { create(:user) }
       let(:answer) { create(:answer, user: user1) }
-      before { post :accept, id: answer.id, format: :js }
-      it "returns error message 'You are not an owner of question.'" do
-        expect(response.body).to eq 'You are not an owner of question.'
-      end
+      before {  }
 
-      it { is_expected.to respond_with(403) }
+      it 'should raise ActiveRecord::RecordNotFound exception' do
+        expect {post :accept, id: answer.id, format: :js}.to raise_error(ActiveRecord::RecordNotFound)
+      end
     end
   end
 
   describe 'PATCH #update' do
     sign_in_user
-    let(:answer) { create(:answer, question: question) }
+    let(:answer) { create(:answer, question: question, user: user) }
 
     it 'assings the requested answer to @answer' do
       patch :update, id: answer, question_id: question, answer: attributes_for(:answer), format: :js
@@ -90,7 +89,8 @@ RSpec.describe AnswersController, :type => :controller do
   end
 
   describe 'DELETE #destroy' do
-    let!(:answer) { create(:answer, question: question)}
+    sign_in_user
+    let!(:answer) { create(:answer, question: question, user: user)}
 
 
     it 'deletes the requested answer' do

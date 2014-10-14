@@ -10,4 +10,21 @@ RSpec.describe Answer, :type => :model do
     answer2 = create(:answer, is_accepted: false)
     expect(Answer.accepted).to eq [answer1]
   end
+
+  describe '#accept' do
+    let(:question) {create(:question)}
+    context "answer's question has no accepted answers" do
+      let!(:answer) { create(:answer, question: question, is_accepted: false)}
+      it 'should mark answer as accepted' do
+        expect{answer.accept}.to change(answer, :is_accepted).to(true)
+      end
+    end
+    context "answer's question has another accepted answer" do
+      let!(:answer1) {create(:answer, question: question, is_accepted: false)}
+      let!(:answer2) {create(:answer, question: question, is_accepted: true)}
+      it 'should return false' do
+        expect(answer1.accept).to eq false
+      end
+    end
+  end
 end
