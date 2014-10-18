@@ -24,6 +24,8 @@ gem 'simple_form'
 gem 'devise'
 
 gem 'carrierwave'
+gem 'remotipart'
+
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'

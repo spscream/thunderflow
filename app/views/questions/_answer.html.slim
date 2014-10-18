@@ -1,7 +1,11 @@
 div[class="row answer answer-#{answer.id}"]
   .columns.small-10
     .answer-text= answer.text
+    ul
+      - answer.attachments.each do |a|
+        li= link_to a.file.identifier, a.file.url
     h5.author: small= "#{answer.user.email}, #{time_ago_in_words(answer.created_at)} ago."
+
   .columns.small-2.text-center
     - if answer.is_accepted?
       a.button.tiny.radius.success== "#{fa_icon"check"} Accepted"
