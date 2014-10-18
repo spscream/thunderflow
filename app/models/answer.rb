@@ -3,7 +3,7 @@ class Answer < ActiveRecord::Base
   belongs_to :user
   belongs_to :question
   has_many :attachments, as: :attachable
-  accepts_nested_attributes_for :attachments
+  accepts_nested_attributes_for :attachments, allow_destroy: true
   scope :accepted, -> { where(is_accepted: true)}
   default_scope { order(is_accepted: :desc, created_at: :asc) }
 

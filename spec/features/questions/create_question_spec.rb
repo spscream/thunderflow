@@ -8,57 +8,67 @@ feature 'Create question', %q{
 
   given(:user) { create(:user) }
 
-  scenario 'Authenticated user creates question' do
-    sign_in(user)
-
-    visit questions_path
-    click_on 'Ask question'
-    fill_in 'Title', with: 'Test question!'
-    fill_in 'Text', with: 'This is my question. Am I writing tests?'
-    click_on 'Create Question'
-    expect(page).to have_content 'Your question successfully created.'
-    expect(page).to have_content 'Test question!'
-    expect(page).to have_content 'This is my question. Am I writing tests?'
-  end
-
-  scenario 'Authenticated user creates question with blank title and text' do
-    sign_in(user)
-
-    visit questions_path
-    click_on 'Ask question'
-    fill_in 'Title', with: ''
-    fill_in 'Text', with: ''
-
-    click_on 'Create Question'
-
-    within(".question_title") do
-      expect(page).to have_content "can't be blank"
+  describe 'Authenticated user' do
+    background do
+      sign_in(user)
+      visit questions_path
     end
 
-    within(".question_text") do
-      expect(page).to have_content "can't be blank"
+    context 'creates new question' do
+      background do
+        click_on 'Ask question'
+      end
+
+      scenario 'with valid title and text' do
+        fill_in 'Title', with: 'Test question!'
+        fill_in 'Text', with: 'This is my question. Am I writing tests?'
+
+        click_on 'Create Question'
+
+        expect(page).to have_content 'Your question successfully created.'
+        expect(page).to have_content 'Test question!'
+        expect(page).to have_content 'This is my question. Am I writing tests?'
+      end
+
+      scenario 'with blank title and text' do
+        fill_in 'Title', with: ''
+        fill_in 'Text', with: ''
+
+        click_on 'Create Question'
+
+        within('.question_title') do
+          expect(page).to have_content "can't be blank"
+        end
+
+        within('.question_text') do
+          expect(page).to have_content "can't be blank"
+        end
+      end
+
+      scenario 'with short title and text' do
+        fill_in 'Title', with: '1'
+        fill_in 'Text', with: '1'
+
+        click_on 'Create Question'
+
+        within '.question_title' do
+          expect(page).to have_content 'is too short'
+        end
+
+        within '.question_text' do
+          expect(page).to have_content 'is too short'
+        end
+      end
+
     end
   end
 
-  scenario 'Authenticated user creates question with short title and text' do
-    sign_in(user)
+  describe 'Non-authenticated user' do
+    scenario 'tries to create a question' do
+      visit questions_path
+      click_on 'Ask question'
 
-    visit questions_path
-    click_on 'Ask question'
-    fill_in 'Title', with: '1'
-    fill_in 'Text', with: '1'
-
-    click_on 'Create Question'
-
-    expect(page).to have_content "Titleis too short"
-    expect(page).to have_content "Text1is too short"
+      expect(page).to have_content 'You need to sign in or sign up before continuing.'
+    end
   end
-
-  scenario 'Non-authenticated user tries to create a question' do
-    visit questions_path
-    click_on 'Ask question'
-
-    expect(page).to have_content 'You need to sign in or sign up before continuing.'
-  end
-
 end

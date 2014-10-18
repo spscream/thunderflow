@@ -1,7 +1,9 @@
-= simple_form_for @question do |f|
+= simple_nested_form_for @question do |f|
   = f.error_notification
   = f.input :title
   = f.input :text
   = f.simple_fields_for :attachments do |attachments_form|
     = attachments_form.input :file, as: :file
-  = f.button :submit, class: "button small"
+    = attachments_form.link_to_remove 'Remove this attachment'
+  = f.link_to_add 'Add a file', :attachments
+  = f.button :submit, class: 'button small'

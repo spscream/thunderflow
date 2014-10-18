@@ -5,5 +5,5 @@ class Question < ActiveRecord::Base
   validates :text, presence: true, length: {minimum: 15}
   validates :title, presence: true, length: {in: 5..250}
 
-  accepts_nested_attributes_for :attachments
+  accepts_nested_attributes_for :attachments, allow_destroy: true
 end
