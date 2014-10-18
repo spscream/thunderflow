@@ -12,7 +12,7 @@ feature 'Attach file', %q{
     visit new_question_path
   end
 
-  scenario 'User makes attachment when asks question' do
+  scenario 'User makes attachment when asks question', js: true do
     fill_in 'Title', with: 'Test question!'
     fill_in 'Text', with: 'This is my question. Am I writing tests?'
 
