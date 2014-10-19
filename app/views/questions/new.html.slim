@@ -2,12 +2,17 @@
   = f.error_notification
   = f.input :title
   = f.input :text
-  = f.simple_fields_for :attachments do |attachments_form|
-    - unless attachments_form.object.file.path.blank?
-      = attachments_form.object.file.identifier
-    - else
-      = attachments_form.input :file, as: :file
-    = attachments_form.hidden_field :file_cache
-    = attachments_form.link_to_remove 'Remove this attachment'
-  = f.link_to_add 'Add a file', :attachments
+  .row
+    .columns.small-10#attachments
+      = f.simple_fields_for :attachments do |attachments_form|
+        - unless attachments_form.object.file.path.blank?
+          = attachments_form.object.file.identifier
+        - else
+          = attachments_form.input :file, as: :file
+        = attachments_form.hidden_field :file_cache
+        p
+          = attachments_form.link_to_remove 'Remove this attachment'
+        hr
+    .columns.small-2.text-right
+      = f.link_to_add 'Add a file', :attachments, data: { target: '#attachments'}, class: 'button tiny'
   = f.button :submit, class: 'button small'
