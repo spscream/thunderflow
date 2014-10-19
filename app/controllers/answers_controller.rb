@@ -37,7 +37,7 @@ class AnswersController < ApplicationController
 
   private
   def answer_params
-    params.require(:answer).permit(:question_id, :text, :user_id, attachments_attributes: [:file, :_destroy])
+    params.require(:answer).permit(:question_id, :text, :user_id, attachments_attributes: [:file, :_destroy, :file_cache])
   end
 
   def load_answer

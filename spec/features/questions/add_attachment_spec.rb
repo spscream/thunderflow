@@ -12,7 +12,7 @@ feature 'Attach file', %q{
     visit new_question_path
   end
 
-  context 'User makes new question', js: true do
+  describe 'User makes new question', js: true do
     background do
       fill_in 'Title', with: 'Test question!'
       fill_in 'Text', with: 'This is my question. Am I writing tests?'
@@ -67,6 +67,27 @@ feature 'Attach file', %q{
         expect(page).to have_link 'spec_helper.rb', href: '/uploads/attachment/file/1/spec_helper.rb'
         expect(page).to_not have_link 'rails_helper.rb', href: '/uploads/attachment/file/2/rails_helper.rb'
       end
+
+      scenario 'caches attachments on question has validation errors' do
+          fill_in 'Title', with: '1'
+
+          click_on 'Create Question'
+
+          within '.new_question' do
+            within '.question_title' do
+              expect(page).to have_content 'is too short'
+            end
+
+            expect(page).to have_content 'spec_helper.rb'
+            expect(page).to have_content 'rails_helper.rb'
+          end
+
+          fill_in 'Title', with: 'Fixed test question!'
+          click_on 'Create Question'
+
+          expect(page).to have_link 'spec_helper.rb', href: '/uploads/attachment/file/1/spec_helper.rb'
+          expect(page).to have_link 'rails_helper.rb', href: '/uploads/attachment/file/2/rails_helper.rb'
+        end
     end
 
   end
