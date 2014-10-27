@@ -15,4 +15,5 @@ div[class="row answer answer-#{answer.id}"]
     - if current_user == @question.user
       - unless @question.answers.accepted.count > 0
         = button_to 'Accept', accept_answer_path(answer), {method: 'post', remote: true, class: 'button tiny radius'}
-  = render 'questions/answer_form', answer: answer
+  div class="columns small-12 answer-form-#{answer.id} #{'hide' unless answer.errors.present?}"
+    = render 'questions/answer_form', answer: answer

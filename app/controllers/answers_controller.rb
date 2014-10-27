@@ -9,8 +9,6 @@ class AnswersController < ApplicationController
     @answers = @question.answers.all
     if @answer.save
       flash[:notice] = 'Answer successfully created.'
-    else
-      render 'questions/show'
     end
   end
 
@@ -37,7 +35,7 @@ class AnswersController < ApplicationController
 
   private
   def answer_params
-    params.require(:answer).permit(:question_id, :text, :user_id, attachments_attributes: [:file, :_destroy, :file_cache])
+    params.require(:answer).permit(:question_id, :text, :user_id, attachments_attributes: [:file, :_destroy, :file_cache, :id])
   end
 
   def load_answer

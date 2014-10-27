@@ -1,8 +1,7 @@
 $('.flash').html('<%= j render 'layouts/messages' %>');
 <% if @answer.errors.present? %>
-    $('.answer-form-<%= @answer.id %>').replaceWith('<%= j render 'questions/answer_form', answer: @answer %>')
+    $('.answer-form-<%= @answer.id %>').replaceWith('<%= j render 'questions/new_answer_form', answer: @answer, question: @question %>')
 <% else %>
-    $('.answer-<%= @answer.id %>')
-            .replaceWith('<%= j render 'questions/answer', answer: @answer %>')
+    $('.answer-<%= @answer.id %>').replaceWith('<%= j render 'questions/answer', answer: @answer %>')
     $('.answers').trigger('answer:updated', [<%= @answer.id %>]);
 <% end %>

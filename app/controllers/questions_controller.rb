@@ -7,8 +7,7 @@ class QuestionsController < ApplicationController
   end
 
   def show
-    @answer = @question.answers.new
-    @answer.attachments.build
+    @answer = @question.answers.build
     @answers = @question.answers.all
   end
 
@@ -53,7 +52,7 @@ class QuestionsController < ApplicationController
   private
 
   def question_params
-    params.require(:question).permit(:title, :text, attachments_attributes: [:file, :_destroy, :file_cache])
+    params.require(:question).permit(:title, :text, attachments_attributes: [:file, :_destroy, :file_cache, :id])
   end
 
   def load_question

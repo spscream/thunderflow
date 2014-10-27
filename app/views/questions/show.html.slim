@@ -18,13 +18,8 @@ hr
   .row
     .small-12.columns.answers-form
       h4 Add answer:
+      = render 'questions/new_answer_form', question: @question, answer: @answer
 
-      =simple_form_for [@question, @answer], remote: true do |f|
-        = f.error_notification
-        = f.input :text
-        = f.simple_fields_for :attachments do |attachments_form|
-          = attachments_form.input :file, as: :file
-        = f.button :submit, class: "button small"
 - else
   .row: .small-12.columns.text-center
     == "To be able make an answers please #{link_to("sign in", new_user_session_path)}."

@@ -3,7 +3,7 @@ require 'acceptance_helper'
 feature 'Attach file', %q{
   In order to illustrate a question
   As an author of question
-  I want to attach the file
+  I want to attach the files
 } do
   given(:user) { create(:user) }
 
@@ -89,6 +89,5 @@ feature 'Attach file', %q{
           expect(page).to have_link 'rails_helper.rb', href: '/uploads/attachment/file/2/rails_helper.rb'
         end
     end
-
   end
 end

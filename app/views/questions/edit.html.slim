@@ -1,5 +1,1 @@
-= simple_form_for @question do |f|
-  = f.error_notification
-  = f.input :title
-  = f.input :text
-  = f.button :submit, class: "button small"
+= render 'questions/question_form', question: @question

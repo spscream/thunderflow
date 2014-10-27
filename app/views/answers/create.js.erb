@@ -1,4 +1,9 @@
 $('.flash').html('<%= j render 'layouts/messages' %>');
+
+<% if @answer.errors.present? %>
+$('#new_answer').replaceWith('<%= j render 'questions/new_answer_form', answer: @answer, question: @question %>')
+<% else %>
 $('.answers').append('<%= j render 'questions/answer', answer: @answer %>');
-$('.answers').trigger('answer:updated',[<%= @answer.id %>]);
+$('.answers').trigger('answer:updated', [<%= @answer.id %>]);
 $('#new_answer').trigger("reset");
+<% end %>

@@ -8,7 +8,7 @@ RSpec.describe AnswersController, :type => :controller do
       it 'saves answer to database' do
         expect { post :create, question_id: question, answer: attributes_for(:answer), format: :js }.to change(Answer, :count).by(1)
       end
-      it 'render create template' do
+      it 'renders create template' do
         post :create, question_id: question.id, answer: attributes_for(:answer), format: :js
         expect(response).to render_template :create
       end
@@ -17,9 +17,9 @@ RSpec.describe AnswersController, :type => :controller do
       it 'does not save question' do
         expect { post :create, question_id: question, answer: attributes_for(:invalid_answer), format: :js }.to_not change(Answer, :count)
       end
-      it 're-renders question show view' do
+      it 'renders answers/create template' do
         post :create, question_id: question.id, answer: attributes_for(:invalid_answer), format: :js
-        should render_template "questions/show"
+        expect(response).to render_template :create
       end
     end
   end

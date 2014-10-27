@@ -26,11 +26,11 @@ feature 'Create answer', %q{
       expect(current_path).to eq question_path(question)
     end
 
-    scenario 'tries to create an answer with blank text' do
-      fill_in 'Text', with: ""
+    scenario 'tries to create an answer with blank text', js: true do
+      fill_in 'Text', with: ''
       click_on 'Create Answer'
 
-      expect(page).to have_content "Textcan't be blank"
+      expect(page).to have_content "Text can't be blank"
     end
   end
 
