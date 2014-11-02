@@ -18,7 +18,7 @@ hr
   .row
     .small-12.columns.answers-form
       h4 Add answer:
-      = render 'questions/new_answer_form', question: @question, answer: @answer
+      = render 'questions/new_answer_form', question: @question, answer: @question.answers.build
 
 - else
   .row: .small-12.columns.text-center

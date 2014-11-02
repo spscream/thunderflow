@@ -2,17 +2,19 @@ class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   before_action :load_question, only: [:show, :edit, :update, :destroy]
 
+  respond_to :html
+  respond_to :js, only: [:destroy]
+
   def index
-    @questions = Question.all
+    respond_with(@questions = Question.all)
   end
 
   def show
-    @answer = @question.answers.build
-    @answers = @question.answers.all
+    respond_with @question
   end
 
   def new
-    @question = Question.new
+    respond_with(@question = Question.new)
   end
 
   def edit
@@ -20,33 +22,21 @@ class QuestionsController < ApplicationController
       flash[:error] = 'You cannot edit question. You are not an owner.'
       redirect_to question_path(@question)
     else
-      render :edit
+      respond_with(@question)
     end
   end
 
   def create
-    @question = current_user.questions.new(question_params)
-    if @question.save
-      flash[:notice] = 'Your question successfully created.'
-      redirect_to @question
-    else
-      render :new
-    end
+    respond_with(@question = current_user.questions.create(question_params))
   end
 
   def update
-    if @question.update(question_params)
-      flash[:notice] = 'Question was successfully updated.'
-      redirect_to @question
-    else
-      render :edit
-    end
+    @question.update(question_params)
+    respond_with @question
   end
 
   def destroy
-    @question = Question.find(params[:id])
-    @question.destroy!
-    flash[:notice] = 'Question was successfully deleted'
+    respond_with(@question.destroy)
   end
 
   private

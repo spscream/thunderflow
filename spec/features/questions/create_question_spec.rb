@@ -25,7 +25,7 @@ feature 'Create question', %q{
 
         click_on 'Create Question'
 
-        expect(page).to have_content 'Your question successfully created.'
+        expect(page).to have_content 'Question was successfully created.'
         expect(page).to have_content 'Test question!'
         expect(page).to have_content 'This is my question. Am I writing tests?'
       end
