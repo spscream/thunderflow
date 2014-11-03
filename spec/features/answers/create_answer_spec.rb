@@ -18,7 +18,7 @@ feature 'Create answer', %q{
       fill_in 'Text', with: "I am answering on your question. Does it help you?"
       click_on 'Create Answer'
 
-      expect(page).to have_content 'Answer successfully created.'
+      expect(page).to have_content 'Answer was successfully created.'
       within('.answers') do
         expect(page).to have_selector (".answer-#{question.answers.first.id}")
         expect(page).to have_content 'I am answering on your question. Does it help you?'

@@ -13,9 +13,12 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery.remotipart
+//= require private_pub
 //= require jquery_nested_form
 //= require turbolinks
 //= require foundation
+//= require handlebars.runtime
+//= require_tree ./templates
 //= require_tree .
 $(function() {
   $(document).foundation();

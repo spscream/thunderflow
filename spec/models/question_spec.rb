@@ -13,4 +13,20 @@ RSpec.describe Question, :type => :model do
   it { should belong_to(:user)}
 
   it { should accept_nested_attributes_for :attachments}
+
+  describe '#has_accepted_answers?' do
+    let(:question) { create(:question) }
+    let(:answer) { create(:answer, question: question)}
+    context 'yes' do
+      before { answer.accept }
+      it 'returns true' do
+        expect(question.has_accepted_answers?).to eq true
+      end
+    end
+    context 'no' do
+      it 'returns false' do
+        expect(question.has_accepted_answers?).to eq false
+      end
+    end
+  end
 end

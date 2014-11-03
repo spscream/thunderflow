@@ -6,4 +6,8 @@ class Question < ActiveRecord::Base
   validates :title, presence: true, length: {in: 5..250}
 
   accepts_nested_attributes_for :attachments, allow_destroy: true
+
+  def has_accepted_answers?
+    self.answers.accepted.count > 0
+  end
 end

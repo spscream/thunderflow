@@ -21,6 +21,9 @@ RSpec.describe Answer, :type => :model do
       it 'should mark answer as accepted' do
         expect{answer.accept}.to change(answer, :is_accepted).to(true)
       end
+      it 'should return true' do
+        expect(answer.accept).to eq true
+      end
     end
     context "answer's question has another accepted answer" do
       let!(:answer1) {create(:answer, question: question, is_accepted: false)}

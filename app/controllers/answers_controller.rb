@@ -1,20 +1,17 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!, only: :create
-  before_action :load_answer, only: [:update, :accept]
+  before_action :load_answer, only: [:update, :accept, :destroy]
+  before_action :load_question, only: [:create]
+
+  respond_to :json, :js
 
   def create
-    @question = Question.find(params[:question_id])
-    @answer = @question.answers.new(answer_params)
-    @answer.user = current_user
-    @answers = @question.answers.all
-    if @answer.save
-      flash[:notice] = 'Answer successfully created.'
-    end
+    respond_with @answer = @question.answers.create(answer_params.merge(user_id: current_user.id))
   end
 
   def update
     @answer.update(answer_params)
-    @question = @answer.question
+    respond_with @answer
   end
 
   def accept
@@ -28,9 +25,7 @@ class AnswersController < ApplicationController
   end
 
   def destroy
-    @answer = Answer.find(params[:id])
-    @answer.destroy!
-    flash[:notice] = 'Answer was successfully deleted'
+    respond_with(@answer.destroy)
   end
 
   private
@@ -40,5 +35,9 @@ class AnswersController < ApplicationController
 
   def load_answer
     @answer = current_user.answers.find(params[:id])
+  end
+
+  def load_question
+    @question = Question.find(params[:question_id])
   end
 end

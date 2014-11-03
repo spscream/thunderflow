@@ -29,3 +29,5 @@ hr
     p= link_to 'Back to Questions list', questions_path
     - if current_user == @question.user
       p= link_to 'Edit Question', edit_question_path(@question)
+
+= subscribe_to "/questions/#{@question.id}/answers"
