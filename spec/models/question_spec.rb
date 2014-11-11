@@ -20,12 +20,12 @@ RSpec.describe Question, :type => :model do
     context 'yes' do
       before { answer.accept }
       it 'returns true' do
-        expect(question.has_accepted_answers?).to eq true
+        expect(question.has_accepted_answers?).to be true
       end
     end
     context 'no' do
       it 'returns false' do
-        expect(question.has_accepted_answers?).to eq false
+        expect(question.has_accepted_answers?).not_to be true
       end
     end
   end

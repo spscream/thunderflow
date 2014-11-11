@@ -22,14 +22,14 @@ RSpec.describe Answer, :type => :model do
         expect{answer.accept}.to change(answer, :is_accepted).to(true)
       end
       it 'should return true' do
-        expect(answer.accept).to eq true
+        expect(answer.accept).to be true
       end
     end
     context "answer's question has another accepted answer" do
       let!(:answer1) {create(:answer, question: question, is_accepted: false)}
       let!(:answer2) {create(:answer, question: question, is_accepted: true)}
       it 'should return false' do
-        expect(answer1.accept).to eq false
+        expect(answer1.accept).not_to be true
       end
     end
   end
