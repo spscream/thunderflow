@@ -12,11 +12,6 @@ class Answer < ActiveRecord::Base
   validates :text, presence: true
 
   def accept
-    # FIXME: Что лучше возвращать в случае, когда вопрос не может быть принят, e.g. есть уже другой принятый ответ, эксепшн или false?
-    if self.question.has_accepted_answers?
-      false
-    else
-      self.update(is_accepted: true)
-    end
+    self.question.has_accepted_answers? ? false : self.update(is_accepted: true)
   end
 end
