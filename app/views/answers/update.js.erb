@@ -1,7 +1,11 @@
 $('.flash').html('<%= j render 'layouts/messages' %>');
 <% if @answer.errors.present? %>
-    $('.answer-form-<%= @answer.id %>').replaceWith('<%= j render 'questions/new_answer_form', answer: @answer, question: @question %>')
+    <% if remotipart_submitted? %>
+    $('.answer-form-<%= @answer.id %>').replaceWith('<%= j(render 'questions/new_answer_form', answer: @answer, question: @question).gsub('&quot;', "'") %>');
+    <% else %>
+    $('.answer-form-<%= @answer.id %>').replaceWith('<%= j render 'questions/new_answer_form', answer: @answer, question: @question %>');
+    <% end %>
 <% else %>
-    $('.answer-<%= @answer.id %>').replaceWith('<%= j render 'questions/answer', answer: @answer %>')
-    $('.answers').trigger('answer:updated', [<%= @answer.id %>]);
+    //$('.answer-<%= @answer.id %>').replaceWith('<%= j render 'questions/answer', answer: @answer %>')
+    //$('.answers').trigger('answer:updated', [<%= @answer.id %>]);
 <% end %>

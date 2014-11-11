@@ -11,6 +11,10 @@ html
     == javascript_include_tag 'application', 'data-turbolinks-track' => true
     == csrf_meta_tags
   body
+    javascript:
+      var config = {
+        current_user: #{{ current_user.to_json }}
+      };
     header
       == render 'layouts/navigation'
     .row[role="main"]

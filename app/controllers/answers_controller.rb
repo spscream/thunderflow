@@ -1,12 +1,17 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!, only: :create
   before_action :load_answer, only: [:update, :accept, :destroy]
-  before_action :load_question, only: [:create]
+  after_action :publish_answer, only: [:create, :update]
 
   respond_to :json, :js
 
   def create
-    respond_with @answer = @question.answers.create(answer_params.merge(user_id: current_user.id))
+    @question = Question.find(params[:question_id])
+    respond_with(@answer = @question.answers.create(answer_params.merge(user_id: current_user.id)))
+  end
+
+  def edit
+
   end
 
   def update
@@ -29,15 +34,15 @@ class AnswersController < ApplicationController
   end
 
   private
-  def answer_params
-    params.require(:answer).permit(:question_id, :text, :user_id, attachments_attributes: [:file, :_destroy, :file_cache, :id])
+  def publish_answer
+    PrivatePub.publish_to("/questions/#{@answer.question.id}/answers", AnswerSerializer.new(@answer)) if @answer.valid?
   end
 
   def load_answer
     @answer = current_user.answers.find(params[:id])
   end
 
-  def load_question
-    @question = Question.find(params[:question_id])
+  def answer_params
+    params.require(:answer).permit(:question_id, :text, :user_id, attachments_attributes: [:file, :_destroy, :file_cache, :id])
   end
 end

@@ -1,4 +1,4 @@
-=simple_nested_form_for [question, answer], remote: true do |f|
+=simple_nested_form_for [question, answer], remote: true, data: {format: :js}  do |f|
   = f.error_notification
   = f.input :text
   .row

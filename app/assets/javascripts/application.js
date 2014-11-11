@@ -15,11 +15,19 @@
 //= require jquery.remotipart
 //= require private_pub
 //= require jquery_nested_form
+//= require rails-timeago-all
 //= require turbolinks
 //= require foundation
 //= require handlebars.runtime
 //= require_tree ./templates
+
+//= require underscore
+//= require backbone
+//= require backbone_rails_sync
+//= require backbone_datalink
+//= require backbone/thunderflow
 //= require_tree .
+
 $(function() {
   $(document).foundation();
 });

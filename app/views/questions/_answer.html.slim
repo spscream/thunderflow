@@ -4,7 +4,10 @@ div[class="row answer answer-#{answer.id}"]
     ul
       - answer.attachments.each do |a|
         li= link_to a.file.identifier, a.file.url
-    h5.author: small= "#{answer.user.email}, #{time_ago_in_words(answer.created_at)} ago."
+    h5.author
+      small
+        = "#{answer.user.email}, "
+        = timeago_tag(answer.created_at, :nojs => true, :limit => 10.days.ago)
 
   .columns.small-2.text-center
     - if answer.is_accepted?

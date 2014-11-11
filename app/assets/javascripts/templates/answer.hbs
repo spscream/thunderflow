@@ -3,36 +3,36 @@
         <div class="answer-text">{{ text }}</div>
         <ul></ul>
         <h5 class="author">
-            <small>scream@spuge.net, 1 day ago.</small>
+            <small>{{ user.email }}, <time class="timeago" title="{{ created_at }}">{{ created_at }}</time></small>
         </h5>
     </div>
-    <div class="columns small-2 text-center"><a class="answer-edit button radius tiny" data-answer-id="147" href="#">Edit
-        answer</a><a class="button tiny radius" data-method="delete" data-remote="true" href="/answers/147"
+    <div class="columns small-2 text-center"><a class="answer-edit button radius tiny" data-answer-id="{{ id }}" href="#">Edit
+        answer</a><a class="button tiny radius" data-method="delete" data-remote="true" href="/answers/{{ id }}"
                      rel="nofollow">Delete answer</a>
 
-        <form action="/answers/147/accept" class="button_to" data-remote="true" method="post">
+        <form action="/answers/{{ id }}/accept" class="button_to" data-remote="true" method="post">
             <div><input class="button tiny radius" type="submit" value="Accept"><input name="authenticity_token"
                                                                                        type="hidden"
                                                                                        value="i2nRhI3oVZC8URoxOjxfpKQJi6jnp5p6VbeS+6tUK9M=">
             </div>
         </form>
     </div>
-    <div class="columns small-12 answer-form-147 hide">
-        <div class="columns small-12 answer-form-147 hide">
-            <form accept-charset="UTF-8" action="/answers/147" class="simple_form edit_answer" data-remote="true"
-                  enctype="multipart/form-data" id="edit_answer_147" method="post" novalidate="novalidate">
+    <div class="columns small-12 answer-form-{{ id }} hide">
+        <div class="columns small-12 answer-form-{{ id }} hide">
+            <form accept-charset="UTF-8" action="/answers/{{ id }}" class="simple_form edit_answer" data-remote="true"
+                  enctype="multipart/form-data" id="edit_answer_{{ id }}" method="post" novalidate="novalidate">
                 <div style="display:none"><input name="utf8" type="hidden" value="✓"><input name="_method" type="hidden"
                                                                                             value="patch"></div>
                 <div class="input string required answer_text"><label class="string required control-label"
                                                                       for="answer_text"><abbr title="required">*</abbr>
                     Text</label><input class="string required" id="answer_text" name="answer[text]" type="text"
-                                       value="BLABLA"></div>
+                                       value="{{ text }}"></div>
                 <div class="row">
-                    <div class="columns small-10" id="attachments-answer-147"></div>
+                    <div class="columns small-10" id="attachments-answer-{{ id }}"></div>
                     <div class="columns small-2 text-right"><a class="button tiny add_nested_fields"
                                                                data-association="attachments"
                                                                data-blueprint-id="attachments_fields_blueprint"
-                                                               data-target="attachments-answer-147"
+                                                               data-target="attachments-answer-{{ id }}"
                                                                href="javascript:void(0)">Add a file</a></div>
                 </div>
                 <input class="button button small" name="commit" type="submit" value="Update Answer">

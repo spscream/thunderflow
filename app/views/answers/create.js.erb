@@ -1,14 +1,17 @@
 $('.flash').html('<%= j render 'layouts/messages' %>');
 
 <% if @answer.errors.present? %>
-$('#new_answer').replaceWith('<%= j render 'questions/new_answer_form', layout: false, answer: @answer, question: @question %>');
+    <% if remotipart_submitted? %>
+        $('#new_answer').replaceWith('<%= j(render 'questions/new_answer_form', layout: false, answer: @answer, question: @question).gsub('&quot;', "'")  %>');
+    <% else %>
+        $('#new_answer').replaceWith('<%= j render 'questions/new_answer_form', layout: false, answer: @answer, question: @question %>');
+    <% end %>
 <% else %>
-$('#new_answer').replaceWith('<%= j render 'questions/new_answer_form', layout: false, answer: Answer.new, question: @question %>');
-$('#new_answer').trigger("reset");
+    <% if remotipart_submitted? %>
+        $('#new_answer').replaceWith('<%= j(render 'questions/new_answer_form', layout: false, answer: Answer.new, question: @question).gsub('&quot;', "'") %>');
+    <% else %>
+        $('#new_answer').replaceWith('<%= j render 'questions/new_answer_form', layout: false, answer: Answer.new, question: @question %>');
+    <% end %>
 
-<% publish_to "/questions/#{@question.id}/answers" do %>
-$('.answers').append('<%= j render 'questions/answer', answer: @answer %>');
-$('.answers').trigger('answer:updated', [<%= @answer.id %>]);
-<% end %>
-
+    $('#new_answer').trigger("reset");
 <% end %>

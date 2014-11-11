@@ -45,8 +45,49 @@ feature 'Attach file', %q{
       end
     end
 
-    context 'with multiple attachments' do
+    context 'with multiple attachments', js: true do
+      background do
+        click_on 'Add a file'
+        all("input[type='file']")[0].set("#{Rails.root}/spec/spec_helper.rb")
+        click_on 'Add a file'
+        all("input[type='file']")[1].set("#{Rails.root}/spec/rails_helper.rb")
+      end
 
+      scenario 'attaches them all' do
+        click_on 'Create Answer'
+
+        expect(page).to have_link 'spec_helper.rb', href: '/uploads/attachment/file/1/spec_helper.rb'
+        expect(page).to have_link 'rails_helper.rb', href: '/uploads/attachment/file/2/rails_helper.rb'
+      end
+
+      scenario 'removes one before creating question' do
+        all(".remove_nested_fields")[1].click
+        click_on 'Create Answer'
+
+        expect(page).to have_link 'spec_helper.rb', href: '/uploads/attachment/file/1/spec_helper.rb'
+        expect(page).to_not have_link 'rails_helper.rb', href: '/uploads/attachment/file/2/rails_helper.rb'
+      end
+
+      scenario 'caches attachments on answer has validation errors' do
+        fill_in 'Text', with: ''
+
+        click_on 'Create Answer'
+
+        within '.new_answer' do
+          within '.answer_text' do
+            expect(page).to have_content "can't be blank"
+          end
+
+          expect(page).to have_content 'spec_helper.rb'
+          expect(page).to have_content 'rails_helper.rb'
+        end
+
+        fill_in 'Text', with: 'Fixed test answer!'
+        click_on 'Create Answer'
+
+        expect(page).to have_content 'spec_helper.rb'
+        expect(page).to have_content 'rails_helper.rb'
+      end
     end
 
   end
