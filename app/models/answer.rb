@@ -3,6 +3,7 @@ class Answer < ActiveRecord::Base
   belongs_to :question
 
   has_many :attachments, as: :attachable
+  has_many :comments, as: :commentable
 
   accepts_nested_attributes_for :attachments, allow_destroy: true, :reject_if => proc {|attributes| attributes['file'].blank?}
 

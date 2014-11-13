@@ -1,0 +1,6 @@
+h4 Comments:
+= render parent.comments
+= simple_form_for [parent, parent.comments.build], remote: true do |f|
+  = f.error_notification
+  = f.input :body
+  = f.button :submit, class: "button small"

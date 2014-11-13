@@ -2,9 +2,12 @@
   .small-12.columns
     h2.question-title= @question.title
     .question-text= @question.text
+    .row
+      .small-12.columns.comments
+        = render 'comments/list', parent: @question
 hr
 .row
-  .small-12.columns
+  .small-12.columns.attachments
     h4 Attachments:
     ul
       - @question.attachments.each do |a|

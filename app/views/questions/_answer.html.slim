@@ -8,6 +8,9 @@ div[class="row answer answer-#{answer.id}"]
       small
         = "#{answer.user.email}, "
         = timeago_tag(answer.created_at, :nojs => true, :limit => 10.days.ago)
+    .row
+      .small-12.columns.comments
+        = render 'comments/list', parent: answer
 
   .columns.small-2.text-center
     - if answer.is_accepted?
