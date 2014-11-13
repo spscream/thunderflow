@@ -52,7 +52,12 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'spring',        group: :development
 gem 'slim-rails'
 
-gem 'rails_layout', group: :development
+gem 'rails_layout', group: :developmentsmi
+
+gem 'omniauth'
+gem 'omniauth-facebook'
+
+gem 'rubocop'
 
 group :production do
   gem 'rails_12factor'

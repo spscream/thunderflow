@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141112204454) do
+ActiveRecord::Schema.define(version: 20141113203114) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -58,6 +58,19 @@ ActiveRecord::Schema.define(version: 20141112204454) do
 
   add_index "questions", ["user_id"], name: "index_questions_on_user_id", using: :btree
 
+  create_table "social_authentications", force: true do |t|
+    t.integer  "user_id"
+    t.string   "provider"
+    t.string   "uid"
+    t.string   "raw_info"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "token"
+    t.datetime "token_expires_at"
+  end
+
+  add_index "social_authentications", ["user_id"], name: "index_social_authentications_on_user_id", using: :btree
+
   create_table "users", force: true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -71,6 +84,8 @@ ActiveRecord::Schema.define(version: 20141112204454) do
     t.datetime "last_sign_in_at"
     t.inet     "current_sign_in_ip"
     t.inet     "last_sign_in_ip"
+    t.string   "name"
+    t.string   "image"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
