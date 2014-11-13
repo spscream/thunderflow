@@ -1,13 +1,14 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!, only: :create
-  before_action :load_answer, only: [:update, :accept, :destroy]
+  before_action :load_and_authorize_answer, only: [:update, :accept, :destroy]
   after_action :publish_answer, only: [:create, :update]
 
   respond_to :json, :js
 
   def create
     @question = Question.find(params[:question_id])
-    respond_with(@answer = @question.answers.create(answer_params.merge(user_id: current_user.id)))
+    authorize @answer = @question.answers.create(answer_params.merge(user_id: current_user.id))
+    respond_with(@answer)
   end
 
   def edit
@@ -38,8 +39,9 @@ class AnswersController < ApplicationController
     PrivatePub.publish_to("/questions/#{@answer.question.id}/answers", AnswerSerializer.new(@answer)) if @answer.valid?
   end
 
-  def load_answer
+  def load_and_authorize_answer
     @answer = current_user.answers.find(params[:id])
+    authorize(@answer)
   end
 
   def answer_params

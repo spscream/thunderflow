@@ -6,7 +6,8 @@ class QuestionsController < ApplicationController
   respond_to :js, only: [:destroy]
 
   def index
-    respond_with(@questions = Question.all)
+    authorize @questions = Question.all
+    respond_with(@questions)
   end
 
   def show
@@ -14,16 +15,12 @@ class QuestionsController < ApplicationController
   end
 
   def new
-    respond_with(@question = Question.new)
+    authorize @question = Question.new
+    respond_with(@question)
   end
 
   def edit
-    if current_user != @question.user
-      flash[:error] = 'You cannot edit question. You are not an owner.'
-      redirect_to question_path(@question)
-    else
-      respond_with(@question)
-    end
+    respond_with(@question)
   end
 
   def create
@@ -47,5 +44,6 @@ class QuestionsController < ApplicationController
 
   def load_question
     @question = Question.find(params[:id])
+    authorize @question
   end
 end

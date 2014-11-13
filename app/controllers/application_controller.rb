@@ -1,6 +1,9 @@
 require "application_responder"
 
 class ApplicationController < ActionController::Base
+  include Pundit
+
+
   self.responder = ApplicationResponder
   respond_to :html
 
@@ -10,8 +13,19 @@ class ApplicationController < ActionController::Base
 
   after_filter :discard_flash_if_xhr
 
+  rescue_from 'Pundit::NotAuthorizedError' do |e|
+    user_not_authorized
+  end
+
   protected
   def discard_flash_if_xhr
     flash.discard if request.xhr?
   end
+
+  def user_not_authorized
+    flash[:alert] = "You are not authorized to perform this action."
+    redirect_to(request.referrer || root_path)
+  end
+
+
 end

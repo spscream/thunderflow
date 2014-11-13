@@ -5,7 +5,8 @@ class CommentsController < ApplicationController
   respond_to :js
 
   def create
-    respond_with(@comment = @parent.comments.create(comment_params))
+    authorize @comment = @parent.comments.create(comment_params.merge(user: current_user))
+    respond_with(@comment)
   end
 
   private

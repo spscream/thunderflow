@@ -59,6 +59,8 @@ gem 'omniauth-facebook'
 
 gem 'rubocop'
 
+gem 'pundit'
+
 group :production do
   gem 'rails_12factor'
   gem 'unicorn-rails'
