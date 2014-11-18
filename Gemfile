@@ -61,6 +61,11 @@ gem 'rubocop'
 
 gem 'pundit'
 
+gem 'doorkeeper'
+
+gem 'oj'
+gem 'oj_mimic_json'
+
 group :production do
   gem 'rails_12factor'
   gem 'unicorn-rails'
@@ -81,6 +86,7 @@ group :test do
   gem 'capybara-email'
   gem 'codeclimate-test-reporter', require: nil
   gem 'simplecov', :require => false
+  gem 'json_spec'
 end
 
 # Use ActiveModel has_secure_password
