@@ -11,6 +11,7 @@
 // about supported directives.
 //
 //= require jquery
+//= require jquery.turbolinks
 //= require jquery_ujs
 //= require jquery.remotipart
 //= require private_pub
@@ -19,14 +20,13 @@
 //= require turbolinks
 //= require foundation
 //= require handlebars.runtime
-//= require_tree ./templates
+//= require_tree ./backbone/templates
 
 //= require underscore
 //= require backbone
 //= require backbone_rails_sync
 //= require backbone_datalink
 //= require backbone/thunderflow
-//= require_tree .
 
 $(function() {
   $(document).foundation();

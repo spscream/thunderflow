@@ -5,6 +5,11 @@ class AnswersController < ApplicationController
 
   respond_to :json, :js
 
+  def index
+    @question = Question.find(params[:question_id])
+    respond_with(@answers = @question.answers)
+  end
+
   def create
     @question = Question.find(params[:question_id])
     authorize @answer = @question.answers.create(answer_params.merge(user_id: current_user.id))

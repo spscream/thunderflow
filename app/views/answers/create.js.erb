@@ -1,17 +1,3 @@
 $('.flash').html('<%= j render 'layouts/messages' %>');
 
-<% if @answer.errors.present? %>
-    <% if remotipart_submitted? %>
-        $('#new_answer').replaceWith('<%= j(render 'questions/new_answer_form', layout: false, answer: @answer, question: @question).gsub('&quot;', "'")  %>');
-    <% else %>
-        $('#new_answer').replaceWith('<%= j render 'questions/new_answer_form', layout: false, answer: @answer, question: @question %>');
-    <% end %>
-<% else %>
-    <% if remotipart_submitted? %>
-        $('#new_answer').replaceWith('<%= j(render 'questions/new_answer_form', layout: false, answer: Answer.new, question: @question).gsub('&quot;', "'") %>');
-    <% else %>
-        $('#new_answer').replaceWith('<%= j render 'questions/new_answer_form', layout: false, answer: Answer.new, question: @question %>');
-    <% end %>
-
-    $('#new_answer').trigger("reset");
-<% end %>
+Thunderflow.Collections.AnswersCollection.rerender()

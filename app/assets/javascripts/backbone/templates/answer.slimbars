@@ -1,0 +1,25 @@
+
+.columns.small-10
+  .answer-text
+    | {{ text }}
+  //ul
+    - answer.attachments.each do |a|
+      li= link_to a.file.identifier, a.file.url
+  h5.author
+    small
+      | {{user.email}}
+      |  {{created_at}}
+  .row
+    .small-12.columns.comments
+//
+  .columns.small-2.text-center
+    - if answer.is_accepted?
+      a.button.tiny.radius.success== "#{fa_icon"check"} Accepted"
+    - if current_user == answer.user
+      a href="#" class="answer-edit button radius tiny" data-answer-id="#{answer.id}" Edit answer
+      = link_to 'Delete answer', answer_path(answer), {remote: true, method: 'delete', class: 'button tiny radius'}
+    - if current_user == answer.question.user
+      - unless answer.question.has_accepted_answers?
+        = button_to 'Accept', accept_answer_path(answer), {method: 'post', remote: true, class: 'button tiny radius'}
+  div class="columns small-12 answer-form-#{answer.id} #{'hide' unless answer.errors.present?}"
+    = render 'questions/answer_form', answer: answer

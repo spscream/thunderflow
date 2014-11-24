@@ -13,9 +13,7 @@ hr
       - @question.attachments.each do |a|
         li= link_to a.file.identifier, a.file.url
 hr
-.row
-  .small-12.columns.answers
-    = render 'questions/answers'
+.row#answers
 
 - if current_user
   .row
@@ -32,5 +30,15 @@ hr
     p= link_to 'Back to Questions list', questions_path
     - if current_user == @question.user
       p= link_to 'Edit Question', edit_question_path(@question)
+
+javascript:
+  window.config.answersPath = "/questions/#{@question.id}/answers"
+  window.router = new Thunderflow.Routers.QuestionRouter();
+  Backbone.history.start();
+
+  $(document).on('page:before-change', function(){
+    delete window.router;
+    Backbone.history.stop();
+  });
 
 = subscribe_to "/questions/#{@question.id}/answers"

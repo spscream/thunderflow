@@ -3,6 +3,7 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 $ ->
+
   answersCtrl =
     showForm: (e) ->
       e.preventDefault();
@@ -34,4 +35,3 @@ $ ->
     console.log(data)
     if data.answer
       answersCtrl.insertOrUpdate(data.answer)
-

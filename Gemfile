@@ -30,17 +30,21 @@ gem 'remotipart'
 gem 'private_pub'
 gem 'thin'
 
+gem 'slim-rails'
+gem 'hamlbars', '~> 2.0'
+
 gem 'handlebars_assets'
+
 gem 'responders'
 
 gem 'rails-timeago', '~> 2.0'
 
 gem 'active_model_serializers'
-
 gem 'rails-backbone'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
+gem 'jquery-turbolinks'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
@@ -50,7 +54,6 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 
 # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
 gem 'spring',        group: :development
-gem 'slim-rails'
 
 gem 'rails_layout', group: :developmentsmi
 

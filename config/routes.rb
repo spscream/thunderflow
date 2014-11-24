@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   end
 
   resources :questions, concerns: :commentable, shallow: true do
-    resources :answers, only: [:create, :update, :destroy], concerns: :commentable do
+    resources :answers, only: [:index, :create, :update, :destroy], concerns: :commentable do
       post 'accept', on: :member
     end
   end
