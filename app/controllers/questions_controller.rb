@@ -1,6 +1,6 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
-  before_action :load_question, only: [:show, :edit, :update, :destroy]
+  before_action :load_and_authorize_question, only: [:show, :edit, :update, :destroy]
 
   respond_to :html
   respond_to :js, only: [:destroy]
@@ -28,8 +28,11 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    @question.update(question_params)
-    respond_with @question
+    if @question.update(question_params)
+      respond_with @question, location: question_path(@question)
+    else
+      render 'questions/edit'
+    end
   end
 
   def destroy
@@ -42,7 +45,7 @@ class QuestionsController < ApplicationController
     params.require(:question).permit(:title, :text, attachments_attributes: [:file, :_destroy, :file_cache, :id])
   end
 
-  def load_question
+  def load_and_authorize_question
     @question = Question.find(params[:id])
     authorize @question
   end

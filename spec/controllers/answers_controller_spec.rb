@@ -55,7 +55,6 @@ RSpec.describe AnswersController, :type => :controller do
     context 'user is not an author of question' do
       let(:user1) { create(:user) }
       let(:answer) { create(:answer, user: user1) }
-      before {  }
 
       it 'should raise ActiveRecord::RecordNotFound exception' do
         expect {post :accept, id: answer.id, format: :js}.to raise_error(ActiveRecord::RecordNotFound)

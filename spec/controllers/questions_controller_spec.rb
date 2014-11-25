@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe QuestionsController, :type => :controller do
   let (:question) { create(:question) }
+
   describe 'GET #index' do
     let(:questions) { create_list(:question, 2) }
     before { get :index }
@@ -36,34 +37,22 @@ RSpec.describe QuestionsController, :type => :controller do
 
   describe 'GET #edit' do
     sign_in_user
-    let(:question) { create(:question, user: user)}
-    context 'User is owner of question' do
-      before { get :edit, id: question }
+    
+    let(:question) { create(:question, user: user) }
+    before { get :edit, id: question }
 
-      it 'assigns the requested question to @question' do
-        expect(assigns(:question)).to eq question
-      end
-
-      it { should render_template :edit }
+    it 'assigns the requested question to @question' do
+      expect(assigns(:question)).to eq question
     end
 
-    context 'User is not an owner of question' do
-      let(:question) {create(:question)}
-      before { get :edit, id: question}
-
-      it { should redirect_to question_path(question) }
-      it 'sets flash error message' do
-        expect(flash[:error]).to have_content 'You cannot edit question. You are not an owner.'
-      end
-    end
-
+    it { should render_template :edit }
   end
 
   describe 'POST #create' do
     sign_in_user
     context 'with valid attributes' do
       it 'saves the new question in the database' do
-        expect{ post :create, question: attributes_for(:question) }.to change(Question, :count).by(1)
+        expect { post :create, question: attributes_for(:question) }.to change(Question, :count).by(1)
       end
       it 'redirects to show view' do
         post :create, question: attributes_for(:question)
@@ -73,7 +62,7 @@ RSpec.describe QuestionsController, :type => :controller do
 
     context 'with invalid attributes' do
       it 'does not save the question' do
-        expect{ post :create, question: attributes_for(:invalid_question) }.to_not change(Question, :count)
+        expect { post :create, question: attributes_for(:invalid_question) }.to_not change(Question, :count)
       end
 
       it 're-renders new view' do
@@ -85,6 +74,8 @@ RSpec.describe QuestionsController, :type => :controller do
 
   describe 'PATCH #update' do
     sign_in_user
+    let(:question) { create(:question, user: user) }
+
     context 'valid attributes' do
       it 'assigns the requested question to @question' do
         patch :update, id: question, question: attributes_for(:question)
@@ -92,7 +83,7 @@ RSpec.describe QuestionsController, :type => :controller do
       end
 
       it 'changes question attributes' do
-        patch :update, id: question, question: { title: 'new title', text: 'new text updated with update method'}
+        patch :update, id: question, question: {title: 'new title', text: 'new text updated with update method'}
         question.reload
         expect(question.title).to eq 'new title'
         expect(question.text).to eq 'new text updated with update method'
@@ -105,7 +96,7 @@ RSpec.describe QuestionsController, :type => :controller do
     end
 
     context 'invalid attributes' do
-      before { patch :update, id: question, question: { title: 'new title', text: nil} }
+      before { patch :update, id: question, question: {title: 'new title', text: nil}}
       it 'does not change question attributes' do
         question.reload
         expect(question.title).to eq 'How to write a tests?'
@@ -120,10 +111,13 @@ RSpec.describe QuestionsController, :type => :controller do
 
   describe 'DELETE #destroy' do
     sign_in_user
+
+    let!(:question) { create(:question, user: user)}
+
     it 'deletes the requested question' do
-      question
-      expect{delete :destroy, id: question, format: :js}.to change(Question, :count).by(-1)
+      expect { delete :destroy, id: question, format: :js }.to change(Question, :count).by(-1)
     end
+
     it 'renders destroy template' do
       delete :destroy, id: question, format: :js
       should render_template :destroy
