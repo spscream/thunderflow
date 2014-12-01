@@ -4,12 +4,11 @@ class Thunderflow.Views.AnswersView extends Backbone.View
 
   initialize: ->
     @listenTo @collection, "reset", @render
-    @collection.fetch({ reset: true })
+    @collection.fetch({ reset: true})
 
   template: -> HandlebarsTemplates['answers']
 
   render: ->
-    console.log("Rendering...")
     @$el.html(@template())
     @collection.forEach @renderAnswer, @
     @

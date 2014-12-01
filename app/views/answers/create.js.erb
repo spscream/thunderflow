@@ -1,3 +1,7 @@
 $('.flash').html('<%= j render 'layouts/messages' %>');
 
-Thunderflow.Collections.AnswersCollection.rerender()
+<% if @answer.errors.present? %>
+    $('#new_answer').html('<%= j render 'questions/new_answer_form', question: @question, answer: @answer %>')
+<% else %>
+    $('#new_answer').html('<%= j render 'questions/new_answer_form', question: @question, answer: @question.answers.new %>')
+<% end %>

@@ -1,5 +1,5 @@
 div class="columns small-12 answer-form-#{answer.id} #{'hide' unless answer.errors.present?}"
-  = simple_nested_form_for answer, remote: true, data: {format: :js}   do |f|
+  = simple_nested_form_for answer, remote: true do |f|
     = f.error_notification
     = f.input :text
     .row

@@ -9,3 +9,4 @@ window.Thunderflow =
   Collections: {}
   Routers: {}
   Views: {}
+  Events: _.extend({}, Backbone.Events)
