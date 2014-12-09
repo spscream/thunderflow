@@ -15,11 +15,11 @@ feature 'Delete answer', %q{
       visit question_path(question)
     end
     scenario 'sees link to delete answer' do
-      expect(page).to have_link('Delete answer')
+      expect(page).to have_selector('.answer-delete')
     end
 
     scenario 'deletes his answer' do
-      click_on 'Delete answer'
+      find('.answer-delete').click
 
       expect(page).to have_content 'Answer was successfully destroyed.'
       expect(page).to_not have_content(answer.text)

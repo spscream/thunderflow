@@ -1,4 +1,10 @@
 class Thunderflow.Models.Answer extends Backbone.Model
+  url: ->
+    '/answers/'+ this.id
+
+  validate: (attrs, options) ->
+    if attrs.text.length < 1
+      "Text can not be blank."
 
 class Thunderflow.Collections.AnswersCollection extends Backbone.Collection
   model: Thunderflow.Models.Answer

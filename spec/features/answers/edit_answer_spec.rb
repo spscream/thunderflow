@@ -24,19 +24,31 @@ feature 'Edit answer', %q{
 
     scenario 'sees link to Edit answer' do
       within ".answer-#{answer.id}" do
-        expect(page).to have_link 'Edit answer'
+        expect(page).to have_selector '.answer-edit'
       end
     end
 
-    scenario 'edits his answer', js: true do
-      within ".answer-#{answer.id}" do
-        click_on 'Edit answer'
-        fill_in 'Text', with: 'Updated text of answer, for testing purposes.'
-        click_on 'Update Answer'
+    context 'edits his answer', js: true do
+      scenario 'with valid attributes' do
+        within ".answer-#{answer.id}" do
+          find('.answer-edit').click
+          fill_in 'Text', with: 'Updated text of answer, for testing purposes.'
+          find('.answer-save').click
 
-        expect(page).to_not have_content answer.text
-        expect(page).to have_content('Updated text of answer, for testing purposes.')
-        expect(page).to have_selector('.answer-edit')
+          expect(page).to_not have_content answer.text
+          expect(page).to have_content('Updated text of answer, for testing purposes.')
+          expect(page).to have_selector('.answer-edit')
+        end
+      end
+
+      scenario 'with invalid attributes' do
+        within ".answer-#{answer.id}" do
+          find('.answer-edit').click
+          fill_in 'Text', with: ''
+          find('.answer-save').click
+
+          expect(page).to have_content('Text can not be blank.')
+        end
       end
     end
 

@@ -15,7 +15,7 @@ feature 'Create answer', %q{
     end
 
     scenario 'creates an answer', js: true do
-      fill_in 'Text', with: "I am answering on your question. Does it help you?"
+      fill_in 'Text', with: 'I am answering on your question. Does it help you?'
       click_on 'Create Answer'
 
       expect(page).to have_content 'Answer was successfully created.'

@@ -1,7 +1,10 @@
 
 .columns.small-9
   .answer-text
-    | {{ text }}
+    label
+      | Text
+      input type="text" name="text" value="{{ text }}"
+    small class="error" style="display:none" Text can not be blank.
   //ul
     - answer.attachments.each do |a|
       li= link_to a.file.identifier, a.file.url
@@ -13,27 +16,9 @@
     .small-12.columns.comments
 .columns.small-3.text-center
   ul.button-group.pull-right
-    | {{#if accepted}}
     li
-      i.fa.fa-check Accepted
-    | {{else}}
-    | {{#if can_accept}}
-    li
-      a href="#" class="answer-accept button radius tiny"
-        i.fa.fa-check
-    | {{/if}}
-    | {{/if}}
-
-    | {{#if can_edit}}
-    li
-      a href="#" class="answer-edit button radius tiny"
-        i.fa.fa-edit
-    | {{/if}}
-    | {{#if can_delete}}
-    li
-      a href="#" class="answer-delete button radius tiny"
-        i.fa.fa-trash
-    | {{/if}}
+      a href="#" class="answer-save button radius tiny"
+        i.fa.fa-save
 
   //
     .columns.small-2.text-center

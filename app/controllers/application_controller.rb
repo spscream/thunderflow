@@ -3,6 +3,8 @@ require "application_responder"
 class ApplicationController < ActionController::Base
   include Pundit
 
+  serialization_scope :current_user
+
   self.responder = ApplicationResponder
   respond_to :html
 

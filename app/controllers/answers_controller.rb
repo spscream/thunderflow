@@ -3,7 +3,7 @@ class AnswersController < ApplicationController
   before_action :load_and_authorize_answer, only: [:update, :accept, :destroy]
   after_action :publish_answer, only: [:create, :update]
 
-  respond_to :json, :js
+  respond_to :js, :json
 
   def index
     @question = Question.find(params[:question_id])
