@@ -1,6 +1,7 @@
 class Thunderflow.Views.Answer extends Backbone.View
 
-  className: -> "row answer answer-" + @model.id
+  className: ->
+    "row answer answer-" + @model.id
 
   template: HandlebarsTemplates['answer']
   editTemplate: HandlebarsTemplates['edit_answer']
@@ -14,7 +15,6 @@ class Thunderflow.Views.Answer extends Backbone.View
 
   save: (e) ->
     e.preventDefault()
-    console.log(@$el.find('input:first').val())
     if @model.save {
         text: @$el.find('input:first').val()
       }, {
@@ -28,7 +28,13 @@ class Thunderflow.Views.Answer extends Backbone.View
 
   accept: (e) ->
     e.preventDefault()
-    console.log("accept")
+    @model.save {
+        is_accepted: true
+      }, {
+        success: ->
+          $('.flash').html("<div class=\"alert-box success\">You accepted an answer.</div>")
+          Thunderflow.Events.trigger('answers:updated')
+      }
     @
 
   edit: (e) ->

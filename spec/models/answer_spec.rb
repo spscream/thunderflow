@@ -15,7 +15,7 @@ RSpec.describe Answer, :type => :model do
   end
 
   describe '#accept' do
-    let(:question) {create(:question)}
+    let!(:question) {create(:question)}
     context "answer's question has no accepted answers" do
       let!(:answer) { create(:answer, question: question, is_accepted: false)}
       it 'should mark answer as accepted' do

@@ -16,6 +16,6 @@ class AnswerPolicy < ApplicationPolicy
   end
 
   def accept?
-    user == record.question.user
+    user == record.question.user and not record.question.has_accepted_answers?
   end
 end

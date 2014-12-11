@@ -13,12 +13,12 @@ feature 'Mark answer as accepted', %q{
     sign_in(user)
     visit question_path(question)
     within('.answers') do
-      first('.answer').click_button('Accept')
+      first('.answer-accept').click
     end
 
     expect(page).to have_content('You accepted an answer.')
     within('.answers') do
-      expect(page).to_not have_button('Accept')
+      expect(page).to_not have_selector('.answer-accept')
     end
   end
 

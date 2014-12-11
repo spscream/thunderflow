@@ -13,9 +13,10 @@
     .small-12.columns.comments
 .columns.small-3.text-center
   ul.button-group.pull-right
-    | {{#if accepted}}
+    | {{#if is_accepted}}
     li
-      i.fa.fa-check Accepted
+      button class="button radius tiny success"
+        i.fa.fa-check
     | {{else}}
     | {{#if can_accept}}
     li

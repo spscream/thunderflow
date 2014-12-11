@@ -13,6 +13,15 @@ class Answer < ActiveRecord::Base
   validates :text, presence: true
 
   def accept
-    self.question.has_accepted_answers? ? false : self.update(is_accepted: true)
+    self.update(is_accepted: true)
+    is_accepted
+  end
+
+  def is_accepted=(is_accepted)
+    if is_accepted
+      self.question.has_accepted_answers? ? false : write_attribute(:is_accepted, true)
+    else
+      write_attribute(:is_accepted, false)
+    end
   end
 end
